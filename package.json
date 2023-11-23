@@ -1,0 +1,34 @@
+{
+  "name": "fast-store",
+  "version": "1.0.0",
+  "description": "A server-side application that uses template engines to perform basic CRUD operation.",
+  "main": "server.js",
+  "scripts": {
+    "randomString": "node ./config/randomstring",
+    "dev": "npx nodemon server",
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/legawa4201/fast-store.git"
+  },
+  "author": "gawz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/legawa4201/fast-store/issues"
+  },
+  "homepage": "https://github.com/legawa4201/fast-store#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "nodemon": "^3.0.1"
+  }
+}
