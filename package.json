@@ -4,7 +4,11 @@
   "description": "A server-side application that uses template engines to perform basic CRUD operation.",
   "main": "server.js",
   "scripts": {
-    "randomString": "node ./config/randomstring",
+    "randomString": "node ./utils/randomstring",
+    "doMigrate": "node migrations/migration1",
+    "undoMigrate": "node migrations/migration1_undo",
+    "doSeeding": "node seeders/seed",
+    "undoSeeding": "node seeders/seed_undo",
     "dev": "npx nodemon server",
     "start": "node server"
   },

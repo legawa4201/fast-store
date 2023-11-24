@@ -1,3 +1,4 @@
+require(`dotenv`).config()
 const { Pool } = require(`pg`);
 
 let connectionString;
@@ -12,7 +13,7 @@ function connect(status) {
     pool.connect()
     .then(function(Client) {
         client = Client
-        return status(null, `Successfully connected to database...`)
+        return status(null, Client)
     })
     .catch(function(err) {
         return status(err)
@@ -20,6 +21,6 @@ function connect(status) {
 }
 
 module.exports = {
-    client,
-    connect
+    connect,
+    client
 }

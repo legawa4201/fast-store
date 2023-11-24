@@ -23,6 +23,6 @@ connect(function(err, message) {
         console.error(err);
         process.exit(1);
     }
-    console.log(message);
+    console.log(`Successfully connected to database...`);
     app.listen(PORT, () => console.log(`Server is listening on port ${PORT}`));
 });

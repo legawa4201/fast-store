@@ -1,4 +1,4 @@
-const pool = require(`../config/connection`);
+const { client } = require(`../config/connection`);
 
 class Category {
     constructor(category_id, category_name) {

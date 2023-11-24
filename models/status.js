@@ -1,4 +1,4 @@
-const pool = require(`../config/connection`);
+const { client } = require(`../config/connection`);
 
 class Status {
     constructor(status_id, status_name) {
