@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.0.0/mdb.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.0.0/mdb.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="d-flex">
+        <div>
+        <%- include('partials/sidebar') %>
+        </div>
+        <div>
+            <table style="text-align: center;">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Produk</th>
+                        <th>Harga</th>
+                        <th>Kategori</th>
+                        <th>Dibuat Tanggal</th>
+                        <th>Diperbarui Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%products.forEach(function(product) {%>
+                        <tr>
+                            <td>
+                                <%=product.product_id%>
+                            </td>
+                            <td>
+                                <%=product.product_name%>
+                            </td>
+                            <td>
+                                <%=product.price%>
+                            </td>
+                            <td>
+                                <%=product.category%>
+                            </td>
+                            <td>
+                                <%=product.getFormattedDate(product.createdAt)%>
+                            </td>
+                            <td>
+                                <%=product.getFormattedDate(product.createdAt)%>
+                            </td>
+                        </tr>
+                        <%})%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<script>
+</script>
+
+</html>

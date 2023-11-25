@@ -1,13 +1,7 @@
 const bcrypt = require(`bcryptjs`)
 
 function hashPass(plainPass) {
-    bcrypt.genSalt(10)
-    .then(function(salt) {
-        return bcrypt.hash(plainPass, salt);
-    })
-    .catch(function(err) {
-        throw err
-    });
+    return bcrypt.hash(plainPass, 10)
 }
 
 function checkPass(plainPass, hashedPass) {

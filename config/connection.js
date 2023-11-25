@@ -8,12 +8,10 @@ if(process.env.NODE_ENV === `production`) connectionString = process.env.DB_PROD
 
 const pool = new Pool({ connectionString });
 
-let client;
 function connect(status) {
     pool.connect()
-    .then(function(Client) {
-        client = Client
-        return status(null, Client)
+    .then(function(_) {
+        return status(null, `Successfully connected to database...`)
     })
     .catch(function(err) {
         return status(err)
@@ -22,5 +20,5 @@ function connect(status) {
 
 module.exports = {
     connect,
-    client
+    pool
 }
