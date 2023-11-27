@@ -13,7 +13,6 @@ class UserController {
 
     static register(req, res) {
         const { username, password } = req.body;
-        console.log(username, password)
         let inputValidator = [];
         if(!username) inputValidator.push(`Username is required!`);
         if(!password) inputValidator.push(`Password is required!`);
@@ -23,7 +22,6 @@ class UserController {
         .then(function(hashedPass) {
             User.registerUser(username, hashedPass)
             .then(function(response) {
-                console.log(response)
                 res.redirect(`/register?success=User registered`);
             })
             .catch(function(err) {
@@ -41,7 +39,7 @@ class UserController {
         const { errors } = req.query
         let status = 200
         if(errors) status = 401
-        res.status(status).render(`login`, { errors })
+        res.status(status).cookie(`access_token`, ``).render(`login`, { errors })
     }
 
     static login(req, res) {
