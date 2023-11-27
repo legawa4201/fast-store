@@ -13,7 +13,7 @@ connect(function(err, client) {
         id_kategori SERIAL PRIMARY KEY,
         nama_kategori VARCHAR NOT NULL,
         dibuat_tanggal TIMESTAMP NOT NULL,
-        diperbarui_tanggal TIMESTAMP NOT NULL;
+        diperbarui_tanggal TIMESTAMP NOT NULL
     );
     `)
     .then(function(_) {
@@ -41,7 +41,7 @@ connect(function(err, client) {
             password_pengguna VARCHAR(100) NOT NULL,
             role_pengguna VARCHAR NOT NULL CHECK(role_pengguna in ('admin', 'staff')),
             dibuat_tanggal TIMESTAMP NOT NULL,
-            diperbarui_tanggal TIMESTAMP NOT NULL;
+            diperbarui_tanggal TIMESTAMP NOT NULL
         );
         `);
     })
@@ -56,7 +56,7 @@ connect(function(err, client) {
             status_id INTEGER NOT NULL REFERENCES "Status" ON DELETE CASCADE,
             pengguna_id UUID NOT NULL REFERENCES "Pengguna" ON DELETE CASCADE,
             dibuat_tanggal TIMESTAMP NOT NULL,
-            diperbarui_tanggal TIMESTAMP NOT NULL;
+            diperbarui_tanggal TIMESTAMP NOT NULL
         );
         `);
     })
