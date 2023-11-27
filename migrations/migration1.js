@@ -13,7 +13,7 @@ connect(function(err, client) {
         id_kategori SERIAL PRIMARY KEY,
         nama_kategori VARCHAR NOT NULL,
         dibuat_tanggal TIMESTAMP NOT NULL,
-        diperbarui_tanggal TIMESTAMP NOT NULL
+        diperbarui_tanggal TIMESTAMP NOT NULL;
     );
     `)
     .then(function(_) {
@@ -24,7 +24,7 @@ connect(function(err, client) {
             nama_status VARCHAR NOT NULL,
             dibuat_tanggal TIMESTAMP NOT NULL,
             diperbarui_tanggal TIMESTAMP NOT NULL
-        )
+        );
         `);
     })
     .then(function(_) {
@@ -37,11 +37,11 @@ connect(function(err, client) {
         return client.query(`
         CREATE TABLE IF NOT EXISTS "Pengguna" (
             id_pengguna UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-            username_pengguna VARCHAR(50) UNIQUE NOT NULL,
+            username_pengguna VARCHAR(50) NOT NULL UNIQUE,
             password_pengguna VARCHAR(100) NOT NULL,
             role_pengguna ROLE NOT NULL CHECK(role_pengguna in ('admin', 'staff')),
             dibuat_tanggal TIMESTAMP NOT NULL,
-            diperbarui_tanggal TIMESTAMP NOT NULL
+            diperbarui_tanggal TIMESTAMP NOT NULL;
         );
         `);
     })
@@ -56,7 +56,7 @@ connect(function(err, client) {
             status_id INTEGER NOT NULL REFERENCES "Status" ON DELETE CASCADE,
             pengguna_id UUID NOT NULL REFERENCES "Pengguna" ON DELETE CASCADE,
             dibuat_tanggal TIMESTAMP NOT NULL,
-            diperbarui_tanggal TIMESTAMP NOT NULL
+            diperbarui_tanggal TIMESTAMP NOT NULL;
         );
         `);
     })

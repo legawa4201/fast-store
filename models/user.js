@@ -11,11 +11,20 @@ class User {
 
     static findUser(username) {
         let baseQuery = `
-        SELECT id_pengguna, username_pengguna, password
+        SELECT id_pengguna, password_pengguna
         FROM "Pengguna"
-        WHERE username = $1;
+        WHERE username_pengguna = $1;
         `;
         return pool.query(baseQuery, [username]);
+    }
+
+    static findUserById(id) {
+        let baseQuery = `
+        SELECT username_pengguna, role_pengguna
+        FROM "Pengguna"
+        WHERE id_pengguna = $1
+        `
+        return pool.query(baseQuery, [id])
     }
 
     static registerUser(username, password) {

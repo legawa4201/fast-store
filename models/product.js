@@ -25,18 +25,24 @@ class Product {
         JOIN "Kategori" k ON p.kategori_id = k.id_kategori 
         JOIN "Status" s ON p.status_id = s.id_status 
         JOIN "Pengguna" u ON p.pengguna_id = u.id_pengguna
-        LIMIT 10
-        OFFSET 0;
-        `
+        ORDER BY diperbarui_tanggal
+        `;
+        let productsPerPage = `LIMIT 10 `;
+        if(options.pages !== undefined) {
+            baseQuery += productsPerPage + `OFFSET ${(options.pages - 1) * 10};`;
+            return pool.query(baseQuery);
+        } else {
+            baseQuery += productsPerPage + `OFFSET 0;`
+                return pool.query(baseQuery);
+        }
 
-        return pool.query(baseQuery)
     }
 
     static getTotalProduct() {
         
         let baseQuery = `
         SELECT COUNT(*)
-        FROM "Produk";
+        FROM "Produk"
         `;
         return pool.query(baseQuery);
     }
@@ -51,7 +57,7 @@ class Product {
         WHERE p.id_produk = $1;
         `
 
-        return pool.query(baseQuery)
+        return pool.query(baseQuery, [id_produk])
     }
 
     static createProduct(product_detail, user_id) {
@@ -76,7 +82,6 @@ class Product {
     }
 
     static deleteProduct(product_id) {
-
         let baseQuery = `
         DELETE FROM "Produk"
         WHERE id_produk = $1;

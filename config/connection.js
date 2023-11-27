@@ -10,8 +10,8 @@ const pool = new Pool({ connectionString });
 
 function connect(status) {
     pool.connect()
-    .then(function(_) {
-        return status(null, `Successfully connected to database...`)
+    .then(function(client) {
+        return status(null, client)
     })
     .catch(function(err) {
         return status(err)
