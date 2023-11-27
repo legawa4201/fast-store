@@ -39,7 +39,7 @@ connect(function(err, client) {
             id_pengguna UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
             username_pengguna VARCHAR(50) NOT NULL UNIQUE,
             password_pengguna VARCHAR(100) NOT NULL,
-            role_pengguna ROLE NOT NULL CHECK(role_pengguna in ('admin', 'staff')),
+            role_pengguna VARCHAR NOT NULL CHECK(role_pengguna in ('admin', 'staff')),
             dibuat_tanggal TIMESTAMP NOT NULL,
             diperbarui_tanggal TIMESTAMP NOT NULL;
         );

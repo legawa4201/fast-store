@@ -20,12 +20,10 @@ class Product {
 
     static findProducts(options) {
         let baseQuery = `
-        SELECT p.id_produk, p.nama_produk, p.harga, k.nama_kategori, s.nama_status, u.username_pengguna, p.dibuat_tanggal, p.diperbarui_tanggal
+        SELECT p.id_produk, p.nama_produk, u.username_pengguna
         FROM "Produk" p 
-        JOIN "Kategori" k ON p.kategori_id = k.id_kategori 
-        JOIN "Status" s ON p.status_id = s.id_status 
         JOIN "Pengguna" u ON p.pengguna_id = u.id_pengguna
-        ORDER BY diperbarui_tanggal
+        ORDER BY p.diperbarui_tanggal DESC
         `;
         let productsPerPage = `LIMIT 10 `;
         if(options.pages !== undefined) {
@@ -71,14 +69,20 @@ class Product {
         return pool.query(baseQuery, [name, price, category_id, status_id, user_id, getCurrentDate(), getCurrentDate()]);
     }
 
-    static editProduct(edited_product) {
+    static editProduct({ name, price, category_id, status_id }, id_produk) {
 
         let baseQuery = `
-        UPDATE TABLE "Produk"
-        SET("")
+        UPDATE "Produk"
+        SET
+        nama_produk = $1,
+        harga = $2,
+        kategori_id = $3,
+        status_id = $4,
+        diperbarui_tanggal = $5
+        WHERE id_produk = $6;
         `;
 
-        return pool.query(baseQuery);
+        return pool.query(baseQuery, [name, price, category_id, status_id, getCurrentDate(), id_produk]);
     }
 
     static deleteProduct(product_id) {

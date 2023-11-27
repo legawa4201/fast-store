@@ -16,6 +16,12 @@
     <div class="d-flex">
         <%- include('partials/sidebar') %>
         <div style="width: 85%;" class="d-flex flex-column m-4 justify-content-center gap-2">
+            <%if(success !== undefined) {%>
+                <h5 class="bg-success text-white text-center"><%=success%></h5>
+            <%}%>
+            <%if(errors !== undefined) {%>
+                <h5 class="bg-danger text-white text-center"><%=errors%></h5>
+            <%}%>
             <table class="table table-dark text-center">
                 <thead>
                     <tr>

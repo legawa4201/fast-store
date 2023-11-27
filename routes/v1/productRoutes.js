@@ -10,8 +10,8 @@ productRouter.get(`/`, ProductController.getProducts);
 productRouter.get(`/add-product`, ProductController.productForm);
 productRouter.post(`/add-product`, ProductController.addProduct);
 
-productRouter.get(`/edit-product/:id`);
-productRouter.post(`/edit-product/:id`);
+productRouter.get(`/edit-product/:id`, authorizationDeleteEdit, ProductController.editForm);
+productRouter.post(`/edit-product/:id`, authorizationDeleteEdit, ProductController.editProduct);
 
 productRouter.get(`/delete-product/:id`, authorizationDeleteEdit, ProductController.deleteProduct);
 

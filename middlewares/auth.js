@@ -9,7 +9,7 @@ function authentication(req, res, next) {
         const { userId } = verifToken(access_token)
         User.findUserById(userId)
         .then(function({ rows }) {
-            req.user = { ...rows[0] }
+            req.user = { userId, ...rows[0] }
             next()
         })
         .catch(function(err) {

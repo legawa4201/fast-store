@@ -14,40 +14,35 @@
 
 <body>
     <div class="d-flex">
-    <%- include('partials/sidebar') %>
-        <div style="width: 90%;" class="d-flex p-3 vh-100 justify-content-center align-items-center">
-            <form action="/products/add-product" method="post"
-                class="d-flex flex-column p-5 bg-dark row gy-2 text-white" style="height: 90%; width: 95%;">
-                <div>
-                    <h3>Pengguna Baru</h3>
-                </div>
-                <%if(errors !==undefined) {%>
-                    <%errors.forEach(function(err) {%>
-                        <p class="text-danger">
-                            <%=err%>
+        <%- include('partials/sidebar') %>
+            <div style="width: 90%;" class="d-flex p-3 vh-100 justify-content-center align-items-center">
+                <form action="/register" method="post" class="d-flex flex-column p-5 bg-dark row gy-2 text-white"
+                    style="height: 90%; width: 95%;">
+                    <div>
+                        <h3>Pengguna Baru</h3>
+                    </div>
+                    <%if(success !== undefined) {%>
+                        <p class="text-white bg-success text-center">
+                            <%=success%>
                         </p>
-                        <%})%>
-                            <%}%>
-                                <div class="d-flex">
-                                    <%if(errors !==undefined) {%>
-                                        <%errors.forEach(function(err) {%>
-                                            <p class="text-danger">
-                                                <%=err%>
-                                            </p>
-                                            <%})%>
-                                                <%}%>
-                                </div>
+                    <%}%>
+                    <%if(errors !==undefined) {%>
+                        <%errors.forEach(function(err) {%>
+                            <p class="text-danger">
+                                <%=err%>
+                            </p>
+                            <%})%>
+                                <%}%>
+                                    <label>Username</label>
+                                    <input type="text" name="username" class="form-control">
 
-                                <label>Username</label>
-                                <input type="email" name="name" class="form-control">
+                                    <label>Password</label>
+                                    <input type="password" name="password" class="form-control">
 
-                                <label>Password</label>
-                                <input type="password" name="price" class="form-control">
-
-                                <button type="submit" class="btn btn-light w-25">Tambah Pengguna</button>
-            </form>
-        </div>
-        </div>
+                                    <button type="submit" class="btn btn-light w-25">Tambah Pengguna</button>
+                </form>
+            </div>
+    </div>
     </div>
 </body>
 

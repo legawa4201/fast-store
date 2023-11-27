@@ -5,15 +5,15 @@ const { genToken } = require("../utils/jsonwebtoken");
 class UserController {
 
     static registerForm(req, res) {
-        const { errors } = req.query
+        const { errors, success } = req.query
         let status = 200
         if(errors) status = 400
-        return res.status(status).render(`register`, { errors })
+        return res.status(status).render(`register`, { errors, success })
     }
 
     static register(req, res) {
         const { username, password } = req.body;
-
+        console.log(username, password)
         let inputValidator = [];
         if(!username) inputValidator.push(`Username is required!`);
         if(!password) inputValidator.push(`Password is required!`);
@@ -24,10 +24,10 @@ class UserController {
             User.registerUser(username, hashedPass)
             .then(function(response) {
                 console.log(response)
-                res.redirect(`/register`);
+                res.redirect(`/register?success=User registered`);
             })
             .catch(function(err) {
-                res.redirect(`/register?error=`);
+                res.status(500).render(`error`);
             })
         })
         .catch(function(err) {

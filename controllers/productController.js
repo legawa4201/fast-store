@@ -10,6 +10,7 @@ class ProductController {
     
     static getProducts(req, res) {
 
+        let { success, errors } = req.query
         let totalProduct;
 
         Product.getTotalProduct()
@@ -23,7 +24,7 @@ class ProductController {
                 const { id_produk, nama_produk, harga, nama_kategori, nama_status, username_pengguna, dibuat_tanggal, diperbarui_tanggal } = prod;
                 return new Product(id_produk, nama_produk, harga, nama_kategori, nama_status, username_pengguna, dibuat_tanggal, diperbarui_tanggal);
             });
-            res.render(`dashboard`, { products, totalProduct });
+            res.render(`dashboard`, { products, totalProduct, success, errors });
         })
         .catch(function(err) {
             console.error(err);
@@ -32,6 +33,7 @@ class ProductController {
     }
 
     static productForm(req, res) {
+
         const { errors } = req.query
         let categories = []
         let status = []
@@ -57,7 +59,7 @@ class ProductController {
 
     static addProduct(req, res) {
         try {
-        const { userId } = req
+        const { userId } = req.user
         const { name, price, category_id, status_id } = req.body
         let errors = []
         if(!name) errors.push(`Product name is required!`);
@@ -74,22 +76,64 @@ class ProductController {
             res.redirect(`/products?pages=${lastPage}`)
         })
         .catch(function(err) {
+            console.log(err)
             res.render(`error`)
         })
         } catch(err) {
-            if(err.name === `BadRequest`) res.redirect(`/products/add-product?errors=` + err.errors.join(`&errors=`))
+            if(err.name === `BadRequest`) return res.redirect(`/products/add-product?errors=` + err.errors.join(`&errors=`))
+            res.status(500).render(`error`)
         }
     }
 
+    static editForm(req, res) {
+        const { id } = req.params
+        let errors;
+        let success;
+        let categories = [];
+        let status = [];
+        Status.findStatus()
+        .then(function({ rows }) {
+            rows.forEach(function(stat) {
+                status.push(new Status(stat.id_status, stat.nama_status))
+            })
+            return Category.findCategories()
+        })
+        .then(function({ rows }) {
+            rows.forEach(function(cat) {
+                categories.push(new Category(cat.id_kategori, cat.nama_kategori))
+            })
+            return Product.findOneProduct(id)
+        })
+        .then(function({ rows }) {
+            console.log(rows[0])
+            res.render(`edit-form`, { product: rows[0], categories, status,  errors })
+        })
+        .catch(function(err) {
+            console.error(err)
+            res.status(500).render(`error`)
+        })
+    }
+
     static editProduct(req, res) {
+        const { id } = req.params
+        Product.editProduct(req.body, id)
+        .then(function(response) {
+            res.redirect(`/products`)
+        })
+        .catch(function(err) {
+            console.error(err);
+            res.status(500).render(`error`)
+        })
     }
 
     static deleteProduct(req, res) {
         const { id } = req.params;
         Product.deleteProduct(id)
         .then(function({ rows }) {
+            res.redirect(`/products?success=deleted`)
         })
         .catch(function(err) {
+            res.render(`error`)
         })
     }
 }
