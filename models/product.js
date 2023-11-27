@@ -20,9 +20,10 @@ class Product {
 
     static findProducts(options) {
         let baseQuery = `
-        SELECT p.id_produk, p.nama_produk, u.username_pengguna
-        FROM "Produk" p 
-        JOIN "Pengguna" u ON p.pengguna_id = u.id_pengguna
+        SELECT p.id_produk, p.nama_produk, u.username_pengguna 
+        FROM "Produk" p JOIN "Pengguna" u ON p.pengguna_id = u.id_pengguna 
+        JOIN "Status" s ON p.status_id = s.id_status 
+        WHERE s.nama_status = 'bisa dijual'
         ORDER BY p.diperbarui_tanggal DESC
         `;
         let productsPerPage = `LIMIT 10 `;
