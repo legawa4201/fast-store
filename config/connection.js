@@ -1,3 +1,4 @@
+require(`dotenv`).config()
 const { Pool } = require(`pg`);
 
 let connectionString;
@@ -7,12 +8,10 @@ if(process.env.NODE_ENV === `production`) connectionString = process.env.DB_PROD
 
 const pool = new Pool({ connectionString });
 
-let client;
 function connect(status) {
     pool.connect()
-    .then(function(Client) {
-        client = Client
-        return status(null, `Successfully connected to database...`)
+    .then(function(client) {
+        return status(null, client)
     })
     .catch(function(err) {
         return status(err)
@@ -20,6 +19,6 @@ function connect(status) {
 }
 
 module.exports = {
-    client,
-    connect
+    connect,
+    pool
 }

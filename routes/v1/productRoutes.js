@@ -1,14 +1,20 @@
 const productRouter = require(`express`).Router();
 
-productRouter.get(`/`);
+const ProductController = require("../../controllers/productController");
+const { authentication, authorizationDeleteEdit } = require("../../middlewares/auth");
 
-productRouter.get(`/add`);
-productRouter.post(`/add`);
+productRouter.use(authentication)
 
-productRouter.get(`/edit/:id`);
-productRouter.put(`/edit/:id`);
+productRouter.get(`/`, ProductController.getProducts);
 
-productRouter.get(`/delete/:id`);
+productRouter.get(`/add-product`, ProductController.productForm);
+productRouter.post(`/add-product`, ProductController.addProduct);
+
+productRouter.get(`/edit-product/:id`, authorizationDeleteEdit, ProductController.editForm);
+productRouter.post(`/edit-product/:id`, authorizationDeleteEdit, ProductController.editProduct);
+
+productRouter.get(`/delete-product/:id`, authorizationDeleteEdit, ProductController.deleteProduct);
+
 productRouter.get(`/:id`);
 
 module.exports = productRouter;
