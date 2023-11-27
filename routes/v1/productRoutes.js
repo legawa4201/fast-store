@@ -15,6 +15,6 @@ productRouter.post(`/edit-product/:id`, authorizationDeleteEdit, ProductControll
 
 productRouter.get(`/delete-product/:id`, authorizationDeleteEdit, ProductController.deleteProduct);
 
-productRouter.get(`/:id`);
+productRouter.get(`/:id`, ProductController.getProduct);
 
 module.exports = productRouter;

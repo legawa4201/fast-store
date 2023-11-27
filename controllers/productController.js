@@ -5,7 +5,15 @@ const Status = require("../models/status")
 class ProductController {
     
     static getProduct(req, res) {
-        const { id } = req.body
+        const { id } = req.params
+        Product.findOneProduct(id)
+        .then(function({ rows }) {
+            const { id_produk, nama_produk, harga, nama_kategori, nama_status, username_pengguna, dibuat_tanggal, diperbarui_tanggal } = rows[0]
+            res.render(`detail`, { product: new Product(id_produk, nama_produk, harga, nama_kategori, nama_status, username_pengguna, dibuat_tanggal, diperbarui_tanggal) });
+        })
+        .catch(function(err) {
+            res.status(500).render(`error`);
+        })
     }
     
     static getProducts(req, res) {
@@ -52,7 +60,7 @@ class ProductController {
         })
         .catch(function(err) {
             console.error(err);
-            res.render(`error`);
+            res.status(500).render(`error`);
         })
         
     }
@@ -69,19 +77,14 @@ class ProductController {
         if(errors.length !== 0) throw { name: `BadRequest`, errors }
         Product.createProduct(req.body, userId)
         .then(function(result) {
-            return Product.getTotalProduct()
-        })
-        .then(function({ rows }) {
-            const lastPage = Math.ceil(rows[0].count/10)
-            res.redirect(`/products?pages=${lastPage}`)
+            res.redirect(`/products`)
         })
         .catch(function(err) {
-            console.log(err)
-            res.render(`error`)
+            console.error(err)
+            res.status(500).render(`error`)
         })
         } catch(err) {
             if(err.name === `BadRequest`) return res.redirect(`/products/add-product?errors=` + err.errors.join(`&errors=`))
-            res.status(500).render(`error`)
         }
     }
 
@@ -105,7 +108,6 @@ class ProductController {
             return Product.findOneProduct(id)
         })
         .then(function({ rows }) {
-            console.log(rows[0])
             res.render(`edit-form`, { product: rows[0], categories, status,  errors })
         })
         .catch(function(err) {
@@ -133,7 +135,7 @@ class ProductController {
             res.redirect(`/products?success=deleted`)
         })
         .catch(function(err) {
-            res.render(`error`)
+            res.status(500).render(`error`)
         })
     }
 }

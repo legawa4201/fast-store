@@ -17,8 +17,9 @@ function authentication(req, res, next) {
         })
     } catch(err) {
         if(err.name === `JsonWebTokenError`) {
-            res.redirect(`/`)
+            return res.redirect(`/`)
         }
+        res.status(500).render(`error`)
     }
 }
 
@@ -27,7 +28,6 @@ function authorizationDeleteEdit(req, res, next) {
     const { id: productId } = req.params;
     Product.findOneProduct(productId)
     .then(function({ rows }) {
-        console.log(rows[0].username_pengguna, user.username_pengguna)
         if(rows[0].username_pengguna !== user.username_pengguna) {
             res.redirect(`/products?errors=forbidden`);
         } else {
@@ -36,6 +36,7 @@ function authorizationDeleteEdit(req, res, next) {
     })
     .catch(function(err) {
         console.error(err);
+        res.status(500).render(`error`)
     })
 }
 
