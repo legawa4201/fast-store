@@ -43,3 +43,16 @@ npm run undoSeeding // to undo seed data from tables
 - Run 'npm run dev' in terminal
 - Visit localhost:3000/ in browser and done! You just run this project on your local machine
 
+# Project Details
+
+## Schema
+![image](./data/Entity%20Relation%20Diagram.png)
+
+## Features
+- User login and logout
+- User can register a new user on their behalf after login
+- User can see list of products
+- User can see the detail of the products
+- User can create product
+- User can delete and edit only their created product
+

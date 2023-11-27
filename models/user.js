@@ -28,7 +28,6 @@ class User {
     }
 
     static registerUser(username, password) {
-        console.log(password)
         let baseQuery = `
         INSERT INTO "Pengguna"("username_pengguna", "password_pengguna", "role_pengguna", "dibuat_tanggal", diperbarui_tanggal)
         VALUES($1, $2, $3, $4, $5);
